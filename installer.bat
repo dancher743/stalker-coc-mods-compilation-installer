@@ -21,7 +21,7 @@ for /D %%G in (*) do (
   for %%S in (%settings_files%) do (
    if exist !orig_settings_file_path!\%%S (
     if not exist !temp_settings_file_path! mkdir !temp_settings_file_path!
-	move !orig_settings_file_path!\%%S !temp_settings_file_path!\%%S
+	move !orig_settings_file_path!\%%S !temp_settings_file_path!\%%S >nul
    )
   )
   
@@ -31,7 +31,7 @@ for /D %%G in (*) do (
   for %%S in (%settings_files%) do (
    if exist !temp_settings_file_path!\%%S (
     if not exist !orig_settings_file_path! mkdir !orig_settings_file_path!
-	move !temp_settings_file_path!\%%S !orig_settings_file_path!\%%S
+	move !temp_settings_file_path!\%%S !orig_settings_file_path!\%%S >nul
    )
   )
   if exist !temp_settings_file_path! rd /S /Q !temp_settings_file_path!
