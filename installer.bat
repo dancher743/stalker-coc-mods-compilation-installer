@@ -2,7 +2,7 @@ echo off
 
 set settings_files=atmosfear_default_settings.ltx atmosfear_options.ltx axr_options.ltx localization.ltx
 
-setlocal EnableDelayedExpansion
+SETLOCAL EnableDelayedExpansion
 
 for /D %%G in (*) do (
  set "folder=%%G"
@@ -45,6 +45,6 @@ for /D %%G in (*) do (
 
 :break
 
-setlocal DisableDelayedExpansion
+SETLOCAL DisableDelayedExpansion
 
 pause
