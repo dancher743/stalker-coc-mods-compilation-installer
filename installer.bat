@@ -18,9 +18,11 @@ for /D %%G in (*) do (
   set orig_settings_file_path=gamedata\configs
   set temp_settings_file_path=settings_temp
   
-  mkdir settings_temp
   for %%S in (%settings_files%) do (
-   if exist !orig_settings_file_path!\%%S move !orig_settings_file_path!\%%S !temp_settings_file_path!\%%S
+   if exist !orig_settings_file_path!\%%S (
+    if not exist !temp_settings_file_path! mkdir !temp_settings_file_path!
+	move !orig_settings_file_path!\%%S !temp_settings_file_path!\%%S
+   )
   )
   
   if exist gamedata rd /S /Q gamedata
@@ -32,8 +34,8 @@ for /D %%G in (*) do (
 	move !temp_settings_file_path!\%%S !orig_settings_file_path!\%%S
    )
   )
-  rd /S /Q settings_temp
-  
+  if exist !temp_settings_file_path! rd /S /Q !temp_settings_file_path!
+
   echo Done^^!
   echo.
   
