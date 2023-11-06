@@ -1,10 +1,8 @@
 echo off
 
-set settings_files=setting_1 setting_2 setting_3
+set settings_files=atmosfear_default_settings.ltx atmosfear_options.ltx axr_options.ltx localization.ltx
 
 SETLOCAL EnableDelayedExpansion
-
-echo.
 
 for /D %%G in (*) do (
  set "folder=%%G"
@@ -13,30 +11,39 @@ for /D %%G in (*) do (
  if !result! == stalker-coc-mods-compilation (  
   set "mod_folder=%%G"
 
+  echo.
   echo !mod_folder!
   echo Installing...
   
-  mkdir settings_temp
+  set orig_settings_file_path=gamedata\configs
+  set temp_settings_file_path=settings_temp
+  
   for %%S in (%settings_files%) do (
-   if exist gamedata\%%S.txt move gamedata\%%S.txt %cd%\settings_temp >nul
+   if exist !orig_settings_file_path!\%%S (
+    if not exist !temp_settings_file_path! mkdir !temp_settings_file_path!
+	move !orig_settings_file_path!\%%S !temp_settings_file_path!\%%S >nul
+   )
   )
-
+  
   if exist gamedata rd /S /Q gamedata
   ren !mod_folder! gamedata
-  
+
   for %%S in (%settings_files%) do (
-   if exist %cd%\settings_temp\%%S.txt move %cd%\settings_temp\%%S.txt gamedata\%%S.txt >nul
+   if exist !temp_settings_file_path!\%%S (
+    if not exist !orig_settings_file_path! mkdir !orig_settings_file_path!
+	move !temp_settings_file_path!\%%S !orig_settings_file_path!\%%S >nul
+   )
   )
-  rd /S /Q settings_temp
-  
+  if exist !temp_settings_file_path! rd /S /Q !temp_settings_file_path!
+
   echo Done^^!
+  echo.
+  
   goto :break
  )
 )
 
 :break
-
-echo.
 
 SETLOCAL DisableDelayedExpansion
 
