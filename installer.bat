@@ -19,24 +19,22 @@ for /D %%G in (*) do (
   set temp_settings_file_path=settings_temp
   
   for %%S in (%settings_files%) do (
-   if exist!orig_settings_file_path!\%% S(
-    if not exist!temp_settings_file_path! mkdir!temp_settings_file_path!
-
-    move!orig_settings_file_path!\%% S!temp_settings_file_path!\%% S > nul
+   if exist !orig_settings_file_path!\%%S (
+    if not exist !temp_settings_file_path! mkdir !temp_settings_file_path!
+	move !orig_settings_file_path!\%%S !temp_settings_file_path!\%%S >nul
    )
   )
   
-  if exist gamedata rd / S / Q gamedata
+  if exist gamedata rd /S /Q gamedata
   ren !mod_folder! gamedata
 
   for %%S in (%settings_files%) do (
-   if exist!temp_settings_file_path!\%% S(
-    if not exist!orig_settings_file_path! mkdir!orig_settings_file_path!
-
-    move!temp_settings_file_path!\%% S!orig_settings_file_path!\%% S > nul
+   if exist !temp_settings_file_path!\%%S (
+    if not exist !orig_settings_file_path! mkdir !orig_settings_file_path!
+	move !temp_settings_file_path!\%%S !orig_settings_file_path!\%%S >nul
    )
   )
-  if exist!temp_settings_file_path! rd / S / Q!temp_settings_file_path!
+  if exist !temp_settings_file_path! rd /S /Q !temp_settings_file_path!
 
   echo Done^^!
   echo.
