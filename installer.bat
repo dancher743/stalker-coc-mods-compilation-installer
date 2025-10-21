@@ -13,7 +13,7 @@ for /D %%G in (*) do (
 
   echo.
   echo !mod_folder!
-  echo Installing...
+  echo Installing gamedata...
   
   set orig_settings_file_path=gamedata\configs
   set temp_settings_file_path=settings_temp
@@ -35,6 +35,18 @@ for /D %%G in (*) do (
    )
   )
   if exist !temp_settings_file_path! rd /S /Q !temp_settings_file_path!
+
+  set "launcher_path=gamedata\launcher.bat"
+  set "launcher_dst=launcher.bat"
+
+  if exist "!launcher_path!" (
+    echo Installing launcher...
+	
+	if exist "!launcher_dst!" (
+        del /f /q "!launcher_dst!"
+    )
+    move "!launcher_path!" "!launcher_dst!" >nul
+  )
 
   echo Done^^!
   echo.
